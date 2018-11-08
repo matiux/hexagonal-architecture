@@ -22,7 +22,7 @@ Host fuori dal container: 127.0.0.1:3307
 Utente: user
 Password: password
 ```
-Preparare il database per far girare gli esempi
+#### Preparare il database per far girare gli esempi
 ```
 ./dc enter
 composer install
