@@ -1,0 +1,17 @@
+{
+  "name": "matiux/hexagonal-architecture",
+  "license": "",
+  "autoload": {
+    "psr-4": {
+      "HexagonalArchitecture\\": "./src"
+    }
+  },
+  "require": {
+    "php": ">=7.1",
+    "doctrine/dbal": "^2.7",
+    "ramsey/uuid": "^3.7",
+    "symfony/console": "^4.1",
+    "phpunit/phpunit": "^7.2",
+    "mockery/mockery": "^1.1"
+  }
+}
