@@ -5,12 +5,22 @@ Hexagonal Architecture refactoring
 https://matiux.github.io/slides/hexagonal-architecture
 
 # Codice di esempio
-Basandomi sul libro *Domain-Driven Design in PHP*, mostro un processo di refactoring da spaghetti code a organizzazione del codice tramite l'architettura esagonale
+Basandomi sul libro *Domain-Driven Design in PHP*, mostro un processo di refactoring da spaghetti code a organizzazione del codice 
+tramite architettura esagonale
 
-L'architettura esagonale consente a un'applicazione di essere ugualmente guidata da utenti, programmi, test automatizzati o script batch e di essere sviluppata e testata separatamente dai suoi eventuali dispositivi e database.
+L'architettura esagonale consente a un'applicazione di essere ugualmente guidata da utenti, programmi, test automatizzati o 
+script batch e di essere sviluppata e testata separatamente dai suoi eventuali dispositivi e database.
 
-### Scaricare il progetto
-`git clone https://github.com/matiux/hexagonal-architecture.git`
+### Preparare il progetto
+
+```shell
+git clone https://github.com/matiux/hexagonal-architecture.git && cd hexagonal-architecture.git
+rm -rf .git/hooks && ln -s ../scripts/git-hooks .git/hooks
+./dc up -d
+./dc enter
+composer install
+php src/build.php
+```
 
 ### Docker
 `dc` è una scorciatoia per `docker-compose`
@@ -27,12 +37,6 @@ Host dentro al container: servicedb:3306
 Host fuori dal container: 127.0.0.1:3307
 Utente: user
 Password: password
-```
-#### Preparare il database per far girare gli esempi
-```
-./dc enter
-composer install
-php src/build.php
 ```
 
 #### Da eseguire all'interno del container

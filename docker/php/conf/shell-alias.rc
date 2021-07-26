@@ -1,0 +1,4 @@
+alias psalm="vendor/bin/psalm --no-cache"
+alias cs-fix="vendor/bin/php-cs-fixer fix --config=.php-cs-fixer.dist.php $(git diff --name-only --cached --diff-filter=ACMR -- '*.php') --show-progress=dots"
+alias xmode.coverage="sed -i 's/xdebug\.mode=.*/xdebug\.mode=coverage/g' /etc/php/8.0/mods-available/xdebug.ini && sudo kill -USR2 1"
+alias xmode.debug="sed -i 's/xdebug\.mode=.*/xdebug\.mode=debug/g' /etc/php/8.0/mods-available/xdebug.ini && sudo kill -USR2 1"

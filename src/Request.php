@@ -1,18 +1,20 @@
 <?php
 
+declare(strict_types=1);
+
 namespace HexagonalArchitecture;
 
 class Request
 {
-    private $params = [];
+    private array $params = [];
 
     public function __construct(array $params)
     {
         $this->params = $params;
     }
 
-    public function getParam(string $key)
+    public function getParam(string $key): mixed
     {
-        return array_key_exists($key, $this->params) ? $this->params[$key] : null;
+        return $this->params[$key] ?? null;
     }
 }
