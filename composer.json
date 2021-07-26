@@ -7,11 +7,26 @@
     }
   },
   "require": {
-    "php": ">=7.1",
-    "doctrine/dbal": "^2.7",
-    "ramsey/uuid": "^3.7",
-    "symfony/console": "^4.1",
-    "phpunit/phpunit": "^7.2",
-    "mockery/mockery": "^1.1"
-  }
+    "php": "^8.0",
+    "doctrine/dbal": "^3.0",
+    "ramsey/uuid": "^4.0",
+    "symfony/console": "5.3.*",
+    "matiux/ddd-starter-pack": "^2.0"
+  },
+  "require-dev": {
+    "friendsofphp/php-cs-fixer": "^3.0",
+    "psalm/attributes": "^0.1.0",
+    "psalm/plugin-mockery": "^0.7.0",
+    "psalm/plugin-phpunit": "^0.15.0",
+    "psalm/plugin-symfony": "^2.1",
+    "vimeo/psalm": "^4.4",
+    "phpunit/phpunit": "^9.0",
+    "mockery/mockery": "^1.4"
+  },
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "git@github.com:matiux/ddd-starter-pack.git"
+    }
+  ]
 }

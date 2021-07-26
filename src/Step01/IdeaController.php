@@ -1,9 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace HexagonalArchitecture\Step01;
 
-use HexagonalArchitecture\Request;
 use Doctrine\DBAL\Connection;
+use Exception;
+use HexagonalArchitecture\Request;
 use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidInterface;
 
@@ -12,62 +15,74 @@ use Ramsey\Uuid\UuidInterface;
  */
 class IdeaController
 {
-    private $connection;
+    private Connection $connection;
 
     public function __construct(Connection $connection)
     {
         $this->connection = $connection;
     }
 
-    public function rateAction(Request $request)
+    /**
+     * @param Request $request
+     *
+     * @throws \Doctrine\DBAL\Exception
+     *
+     * @return UuidInterface
+     */
+    public function createAction(Request $request): UuidInterface
     {
-        $ideaId = $request->getParam('id');
-        $rating = $request->getParam('rating');
+        $idIdea = Uuid::uuid4();
+
+        $this->connection->insert('ideas', [
+            'id' => (string) $idIdea,
+            'title' => $request->getParam('title'),
+            'author' => $request->getParam('author'),
+            'description' => $request->getParam('description'),
+        ]);
+
+        echo sprintf("Idea creata. ID: %s - Voti:\n", (string) $idIdea);
+
+        return $idIdea;
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @throws \Doctrine\DBAL\Driver\Exception
+     * @throws \Doctrine\DBAL\Exception
+     */
+    public function rateAction(Request $request): void
+    {
+        $idIdea = (string) $request->getParam('id');
+        $punteggio = (float) $request->getParam('rating');
 
         $sql = 'SELECT * FROM ideas WHERE id = ?';
         $stmt = $this->connection->prepare($sql);
-        $stmt->bindValue(1, $ideaId);
-        $stmt->execute();
-
-        $row = $stmt->fetch();
+        $stmt->bindValue(1, $idIdea);
+        $result = $stmt->executeQuery();
+        $row = $result->fetchAssociative();
 
         if (!$row) {
-            throw new \Exception ('Idea does not exist');
+            throw new Exception('Idea does not exist');
         }
 
         $idea = new Idea();
-        $idea->setId(Uuid::fromString($row['id']));
-        $idea->setTitle($row['title']);
-        $idea->setDescription($row['description']);
-        $idea->setAuthor($row['author']);
-        $idea->setVotes($row['votes']);
-        $idea->setRating($row['rating']);
+        $idea->impostaId(Uuid::fromString((string) $row['id']));
+        $idea->impostaTitolo((string) $row['title']);
+        $idea->impostaDescrizione((string) $row['description']);
+        $idea->impostaAutore((string) $row['author']);
+        $idea->impostaVoti((int) $row['votes']);
+        $idea->impostaPunteggio((float) $row['rating']);
 
-        $idea->addRating($rating);
+        $idea->vota($punteggio);
 
         $data = [
-            'rating' => $idea->getRating(),
-            'votes' => $idea->getVotes(),
+            'rating' => $idea->punteggio(),
+            'votes' => $idea->voti(),
         ];
 
-        $this->connection->update('ideas', $data, array('id' => $ideaId));
+        $this->connection->update('ideas', $data, ['id' => $idIdea]);
 
-        echo sprintf("Idea with ID %s updated\n", $ideaId);
-    }
-
-    public function createAction(Request $request): UuidInterface
-    {
-        $ideaId = Uuid::uuid4();
-
-        $this->connection->insert('ideas', [
-            'id' => $ideaId->toString(),
-            'title' => $request->getParam('title'),
-            'author' => $request->getParam('author'),
-            'description' => $request->getParam('description')
-        ]);
-
-        echo sprintf("Idea created with ID %s\n", $ideaId->toString());
-
-        return $ideaId;
+        echo sprintf("Idea with ID %s updated\n", $idIdea);
     }
 }

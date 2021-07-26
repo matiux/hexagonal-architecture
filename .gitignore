@@ -1,2 +1,21 @@
-vendor
+###> Docker ###
+docker/docker-compose.override.yml
+###< Docker ###
+
+###> Misc ###
 .idea
+vendor
+###< Misc ###
+
+###> friendsofphp/php-cs-fixer ###
+.php_cs
+.php-cs-fixer.cache
+.php_cs.cache
+lsp
+###< friendsofphp/php-cs-fixer ###
+
+###> symfony/phpunit-bridge ###
+.phpunit
+.phpunit.result.cache
+/phpunit.xml
+###< symfony/phpunit-bridge ###

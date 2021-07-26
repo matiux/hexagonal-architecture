@@ -1,0 +1,56 @@
+version: '3.7'
+
+volumes:
+  app_database: {}
+
+networks:
+  hex_arch_network:
+    name: hex_arch_network
+    driver: bridge
+
+services:
+  php_hex_arch:
+    build: php
+    hostname: hex_arch_host
+    volumes:
+      - ../:/var/www/app:delegated
+      - ./data/shell_history:/home/utente/shell_history
+    networks:
+      - hex_arch_network
+    environment:
+      - HISTFILE=/home/utente/shell_history/.x_history
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    ports:
+      - "8081:80"
+    depends_on:
+      - servicedb
+    environment:
+      - PMA_HOST=servicedb
+    networks:
+      - hex_arch_network
+
+  servicedb:
+    image: mysql:5.7
+    volumes:
+      - app_database:/var/lib/mysql
+    command: mysqld --sql_mode=""
+    ports:
+      - '3307:3306'
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_USER=user
+      - MYSQL_PASSWORD=password
+      - MYSQL_DATABASE=idy
+    networks:
+      - hex_arch_network
+
+  nodejs:
+    build: nodejs
+    working_dir: /var/www/app
+    #command: "commitlint -e --from=HEAD"
+    volumes:
+      - ../:/var/www/app
+    networks:
+      - hex_arch_network

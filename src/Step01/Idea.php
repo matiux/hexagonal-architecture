@@ -1,65 +1,70 @@
 <?php
 
+declare(strict_types=1);
+
 namespace HexagonalArchitecture\Step01;
 
 use Ramsey\Uuid\UuidInterface;
 
+/**
+ * @psalm-suppress MissingConstructor
+ */
 class Idea
 {
-    private $id;
-    private $title;
-    private $description;
-    private $votes;
-    private $author;
-    private $rating;
+    private UuidInterface $id;
+    private string $titolo;
+    private string  $descrizione;
+    private int $voti;
+    private string $autore;
+    private float $punteggio;
 
-    public function setId(UuidInterface $id): void
+    public function impostaId(UuidInterface $id): void
     {
         $this->id = $id;
     }
 
-    public function setTitle(string $title): void
+    public function impostaTitolo(string $titolo): void
     {
-        $this->title = $title;
+        $this->titolo = $titolo;
     }
 
-    public function setDescription(string $description): void
+    public function impostaDescrizione(string $descrizione): void
     {
-        $this->description = $description;
+        $this->descrizione = $descrizione;
     }
 
-    public function setAuthor(string $author): void
+    public function impostaAutore(string $autore): void
     {
-        $this->author = $author;
+        $this->autore = $autore;
     }
 
-    public function setVotes(int $votes): void
+    public function impostaVoti(int $voti): void
     {
-        $this->votes = $votes;
+        $this->voti = $voti;
     }
 
-    public function setRating(float $rating): void
+    public function impostaPunteggio(float $punteggio): void
     {
-        $this->rating = $rating;
+        $this->punteggio = $punteggio;
     }
 
-    public function addRating(float $rating): void
+    public function vota(float $punteggio): void
     {
-        $this->votes++;
-        $this->rating = ($rating + $this->rating) / $this->votes;
+        ++$this->voti;
+        $this->punteggio = ($punteggio + $this->punteggio) / $this->voti;
     }
 
-    public function getRating(): int
+    public function punteggio(): float
     {
-        return $this->rating;
+        return $this->punteggio;
     }
 
-    public function getVotes(): int
+    public function voti(): int
     {
-        return $this->votes;
+        return $this->voti;
     }
 
-    public function getId(): UuidInterface
+    public function id(): UuidInterface
     {
         return $this->id;
     }

@@ -1,18 +1,18 @@
 #!/usr/bin/env php
 <?php
 
-require __DIR__ . '/../../vendor/autoload.php';
+require __DIR__.'/../../vendor/autoload.php';
 
+use HexagonalArchitecture\Step04\Idea\Application\Service\CreaIdea;
+use HexagonalArchitecture\Step04\Idea\Infrastructure\Communication\Console\CreateIdeaCommand;
+use HexagonalArchitecture\Step04\Idea\Infrastructure\Domain\Model\MySql\MySqlIdee;
 use Symfony\Component\Console\Application;
-use HexagonalArchitecture\Step04\Application\Service\Idea\CreateIdeaService;
-use HexagonalArchitecture\Step04\Infrastracture\Delivery\Console\CreateIdeaCommand;
-use HexagonalArchitecture\Step04\Infrastracture\Domain\Idea\MySql\MySqlIdeaRepository;
 
 $application = new Application();
 
 $application->add(
     new CreateIdeaCommand(
-        new CreateIdeaService(new MySqlIdeaRepository())
+        new CreaIdea(new MySqlIdee())
     )
 );
 
