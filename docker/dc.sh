@@ -57,7 +57,7 @@ elif [[ "$1" == "phpunit" ]]; then
 
   shift 1
   ${DC_EXEC} \
-    bin/phpunit --colors=always --testdox "$@"
+    vendor/bin/phpunit --colors=always --testdox "$@"
 
 elif [[ "$1" == "coverage-badge" ]]; then
 

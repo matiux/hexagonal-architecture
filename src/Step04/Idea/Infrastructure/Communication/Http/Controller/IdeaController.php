@@ -9,7 +9,6 @@ use HexagonalArchitecture\Step04\Idea\Application\Service\CreaIdea;
 use HexagonalArchitecture\Step04\Idea\Application\Service\CreaIdeaRequest;
 use HexagonalArchitecture\Step04\Idea\Application\Service\VotaIdea;
 use HexagonalArchitecture\Step04\Idea\Application\Service\VotaIdeaRequest;
-use HexagonalArchitecture\Step04\Idea\Domain\Model\Idea;
 use HexagonalArchitecture\Step04\Idea\Domain\Model\IdIdea;
 use HexagonalArchitecture\Step04\Idea\Infrastructure\Domain\Model\MySql\MySqlIdee;
 
@@ -40,7 +39,6 @@ class IdeaController
         ));
 
         if ($response->isSuccess()) {
-            /** @var Idea $idea */
             $idea = $response->body();
 
             echo sprintf("Idea with ID %s updated\nNew score: %s", (string) $idea->id(), (string) $idea->punteggio());

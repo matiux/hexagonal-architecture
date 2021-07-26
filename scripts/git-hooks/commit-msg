@@ -1,3 +1,0 @@
-#!/usr/bin/env bash
-
-./dc run nodejs commitlint --from=HEAD -V
